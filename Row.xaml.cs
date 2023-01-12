@@ -29,38 +29,20 @@ namespace Deafen
 
             Title.Text = data.Name;
 
-            if (data.arrayByte.Length == 0)
+            data.frequencies.ForEach((value) =>
             {
-                GenerateGraphicsData();
-            }
-            else
-            {
-                for (int i = 0; i < data.arrayByte.Length; i++)
-                {
-                    points.Add(new ObservablePoint(i, data.arrayByte[i]));
-                }
-            }
+                points.Add(new ObservablePoint(value.milliseconds, value.frequency));
+            });
 
             chart.Series = new SeriesCollection
             {
                 new LineSeries
                 {
                     Values = points ,
-                    PointGeometrySize = 1
+                    PointGeometrySize = 5,
+                    LineSmoothness = 0
                 } 
             };
-
-        }
-
-        private void GenerateGraphicsData()
-        {
-            Random rand = new Random();
-
-            for (int i = 0; i < 1000000; i++)
-            {
-                int ord = rand.Next(200, 3000);
-                points.Add(new ObservablePoint(i, 1000));
-            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
