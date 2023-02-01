@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +19,11 @@ namespace Deafen.Class
             Name = n;
             frequencies = f;
 
+            CreateArrayByte();
+        }
+
+        public void CreateArrayByte()
+        {
             MemoryStream mStrm;
             BinaryWriter writer;
             int samplesPerSecond = 44100;
@@ -27,10 +33,16 @@ namespace Deafen.Class
             Beep.CreateBeep(mStrm, writer, samplesPerSecond, frequencies);
 
             mStrm.Seek(0, SeekOrigin.Begin);
-            new System.Media.SoundPlayer(mStrm).Play();
             writer.Close();
             mStrm.Close();
-            arrayByte =  mStrm.ToArray();
+            arrayByte = mStrm.ToArray();
+        }
+
+        public void Play()
+        {
+            MemoryStream stream = new MemoryStream(arrayByte);
+            SoundPlayer player = new SoundPlayer(stream);
+            player.Play();
         }
     }
 }

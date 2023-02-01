@@ -5,25 +5,33 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Deafen"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="800">
+             d:DesignHeight="400" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition Width="300*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <DockPanel  Grid.Column="0" >
-            <TextBox DockPanel.Dock = "Top" Name="Title" HorizontalAlignment="Center"></TextBox>
-            <Button Click="Button_Click"></Button>
-        </DockPanel>
+        <StackPanel  Grid.Column="0" >
+            <TextBox Name="NameSequency" HorizontalAlignment="Center"></TextBox>
+            <Button Click="Button_Click">Play</Button>
+            <Button Click="Button_Click_1">Details</Button>
+        </StackPanel>
 
-        <Wpf:CartesianChart Grid.Column="1" Name="chart">
+        <Wpf:CartesianChart Grid.Column="1" Name="frequencies" MouseDoubleClick="chart_MouseDoubleClick">
             <Wpf:CartesianChart.AxisY>
                 <Wpf:Axis MinValue="0" MaxValue="1000">
+                </Wpf:Axis>
+            </Wpf:CartesianChart.AxisY>
+        </Wpf:CartesianChart>
+
+        <Wpf:CartesianChart Grid.Column="2" Name="volumes">
+            <Wpf:CartesianChart.AxisY>
+                <Wpf:Axis MinValue="0" MaxValue="200">
                 </Wpf:Axis>
             </Wpf:CartesianChart.AxisY>
         </Wpf:CartesianChart>

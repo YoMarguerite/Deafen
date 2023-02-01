@@ -12,7 +12,19 @@
             <Button Click="Button_Click_1">PLAY</Button>
             
             <TextBox x:Name="text" Width="50">400</TextBox>
-            <TextBox x:Name="text2" Width="50">1000</TextBox>
+            
+            <Slider x:Name="slider" 
+                    Width="50" Minimum="0" Maximum="200" Value="100"
+                     AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0"></Slider>
+
+            <TextBox x:Name="text2" Width="50">400</TextBox>
+
+            <Slider x:Name="slider2" 
+                    Width="50" Minimum="0" Maximum="200" Value="100"
+                     AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0"></Slider>
+
+            <TextBox x:Name="milliseconds" Width="50">1000</TextBox>
+
             <Button Click="Button_Click">
                 ADD
             </Button>
@@ -30,6 +42,9 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="200"></RowDefinition>
+                            </Grid.RowDefinitions>
                             <local:Row></local:Row>
                         </Grid>
                     </DataTemplate>

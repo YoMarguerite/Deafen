@@ -123,6 +123,9 @@
     </ApplicationDefinition>
     <Compile Include="Class\Beep.cs" />
     <Compile Include="Class\Frequency.cs" />
+    <Compile Include="SequenceDetails.xaml.cs">
+      <DependentUpon>SequenceDetails.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Row.xaml.cs">
       <DependentUpon>Row.xaml</DependentUpon>
     </Compile>
@@ -140,6 +143,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SequenceDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Row.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -50,7 +50,7 @@ namespace Deafen.Class
                 
                 // 'volume' is UInt16 with range 0 thru Uint16.MaxValue ( = 65 535)
                 // we need 'amp' to have the range of 0 thru Int16.MaxValue ( = 32 767)
-                double amp = 16383 >> 2; // so we simply set amp = volume / 2
+                double amp = (int)(16383 * frequencies[i].volume /100) >> 2; // so we simply set amp = volume / 2
                 //double theta = frequencies[i].frequency * TAU / (double)samplesPerSecond;
                 for (int step = 0; step < samples; step++)
                 {

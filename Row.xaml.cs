@@ -5,6 +5,7 @@ using System.Linq;
 using System.Media;
 using System.Windows;
 using System.Windows.Controls;
+using Deafen.Class;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
@@ -16,44 +17,42 @@ namespace Deafen
     /// </summary>
     public partial class Row : UserControl
     {
-        private ChartValues<ObservablePoint> points = new ChartValues<ObservablePoint>();
-        public ChartValues<ObservablePoint> Points => points;
+        private ChartValues<ObservablePoint> frequencyPoints = new ChartValues<ObservablePoint>();
+        private ChartValues<ObservablePoint> volumePoints = new ChartValues<ObservablePoint>();
         public string Mute => "mute";
 
-        private Class.DataRow data;
+        private DataRow data;
 
         public Row()
         {
             InitializeComponent();
             data = MainWindow.MyCollection.Last();
 
-            Title.Text = data.Name;
+            NameSequency.Text = data.Name;
 
-            data.frequencies.ForEach((value) =>
-            {
-                points.Add(new ObservablePoint(value.milliseconds, value.frequency));
-            });
-
-            chart.Series = new SeriesCollection
-            {
-                new LineSeries
-                {
-                    Values = points ,
-                    PointGeometrySize = 5,
-                    LineSmoothness = 0
-                } 
-            };
+            SequenceDetails.SetPointOnCartesianChart(data.frequencies, "frequency", frequencies, frequencyPoints);
+            SequenceDetails.SetPointOnCartesianChart(data.frequencies, "volume", volumes, volumePoints);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            data.Play();
+        }
 
-            //var wav = new WavePcmFormat(buffer, numChannels: 1, sampleRate: 44100, bitsPerSample: 16);
-            //var rawDataWithHeader = wav.ToBytesArray();
+        private void chart_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var chart = (CartesianChart)sender;
+            ObservablePoint point = new ObservablePoint(chart.ConvertToChartValues(e.GetPosition(chart)).X, chart.ConvertToChartValues(e.GetPosition(chart)).Y);
+            int index = frequencyPoints.ToList().FindIndex(value => value.X >= point.X);
+            frequencyPoints.Insert(index, point);
+            data.frequencies.Insert(index, new Frequency(point.X, point.Y, 100));
+            data.CreateArrayByte();
+        }
 
-            MemoryStream stream = new MemoryStream(data.arrayByte);
-            SoundPlayer player = new SoundPlayer(stream);
-            player.Play();
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            SequenceDetails details = new SequenceDetails(data);
+            details.Show();
         }
     }
 }
